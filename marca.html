@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Sistema de marca da Pousada Sal & Serra: logotipo, cores, tipografia e peças prontas que mantêm a pousada reconhecível em todo lugar.">
+<meta name="theme-color" content="#0b2b3c">
+<title>Sistema de marca · Pousada Sal & Serra</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Young+Serif&display=swap">
+<link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+<a class="pular" href="#conteudo">Pular para o conteúdo</a>
+<div id="topo" data-atual="marca.html"></div>
+<main id="conteudo" tabindex="-1">
+  <section class="wrap pagina" style="padding-bottom:20px">
+    <p class="sobre" style="font:700 .78rem var(--f-corpo);letter-spacing:.16em;text-transform:uppercase;color:var(--mata)">Sistema de marca</p>
+    <h1 style="font-size:clamp(1.9rem,4.6vw,3rem);margin-top:8px;max-width:20ch">Uma pousada que o hóspede reconhece de longe</h1>
+    <p style="color:var(--suave);margin-top:12px;max-width:66ch">Hóspede decide em segundos e lembra pelo que vê: o selo, as cores, a letra. Aqui a identidade vira um sistema: você muda a marca uma vez e o site, a reserva, o post, a placa e a assinatura de e-mail mudam juntos. Teste abaixo: as alterações valem para todas as páginas desta amostra.</p>
+  </section>
+
+  <section class="wrap" style="padding-bottom:40px" aria-labelledby="t-editor">
+    <h2 id="t-editor" style="font-size:1.6rem">Troque a identidade</h2>
+    <p style="color:var(--suave);margin-top:6px">Escolha uma paleta pronta ou ajuste cada cor. Em seguida abra o <a href="index.html">início</a> para ver o site inteiro com a nova marca.</p>
+    <div class="amostras" id="presets" style="margin-top:16px"></div>
+    <form id="editor" class="grade-campos" style="margin-top:8px" novalidate>
+      <div><label for="e-nome">Nome da pousada</label><input type="text" id="e-nome" maxlength="40"></div>
+      <div><label for="e-curto">Nome curto (no logotipo)</label><input type="text" id="e-curto" maxlength="22"></div>
+      <div><label for="e-ini">Inicial (avatar)</label><input type="text" id="e-ini" maxlength="1"></div>
+      <div><label for="e-slogan">Assinatura</label><input type="text" id="e-slogan" maxlength="50"></div>
+    </form>
+    <div class="grade-campos" id="cores-edit" style="margin-top:6px"></div>
+    <div class="acoes" style="margin-top:16px"><button class="btn btn-contorno btn-pequeno" id="restaurar" type="button">Voltar à marca original</button></div>
+  </section>
+
+  <section class="bloco" style="background:var(--sal);color:var(--mar)" aria-labelledby="t-logo">
+    <div class="wrap" style="padding-block:44px">
+      <h2 id="t-logo" style="font-size:1.6rem">Logotipo</h2>
+      <p style="color:var(--suave);margin:6px 0 18px;max-width:64ch">O selo é um sol nascendo sobre duas ondas: serra e mar em um só desenho. Ele funciona sozinho em tamanho pequeno e acompanhado do nome em tamanho grande.</p>
+      <div class="amostras" id="logos"></div>
+    </div>
+  </section>
+
+  <section class="wrap" style="padding-block:44px" aria-labelledby="t-cores">
+    <h2 id="t-cores" style="font-size:1.6rem">Cores</h2>
+    <p style="color:var(--suave);margin:6px 0 18px;max-width:64ch">Cinco cores, cada uma com uma função. O contraste mostrado vale para texto (4,5 ou mais) e foi calculado com a regra WCAG.</p>
+    <div class="amostras" id="cores"></div>
+  </section>
+
+  <section class="wrap" style="padding-bottom:44px" aria-labelledby="t-tipo">
+    <h2 id="t-tipo" style="font-size:1.6rem">Tipografia</h2>
+    <div class="amostras" style="margin-top:16px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))">
+      <div class="tipo-amostra"><p style="font-size:.78rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--suave)">Títulos · Young Serif</p><p class="grande" data-marca="nome"></p><p style="margin-top:10px;font-family:var(--f-titulo);font-size:1.25rem">Sol, serra e mar em Juquehy</p></div>
+      <div class="tipo-amostra"><p style="font-size:.78rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--suave)">Texto · Figtree</p><p style="font-size:1.05rem;max-width:44ch">Entrada a partir das 14h, saída até as 12h. Café da manhã incluso em todas as diárias. Reservando direto, o valor fica com a pousada.</p><p style="margin-top:10px;font-weight:800">Reservar agora</p></div>
+    </div>
+  </section>
+
+  <section class="bloco" style="background:var(--brisa);color:var(--mar)" aria-labelledby="t-apl">
+    <div class="wrap" style="padding-block:44px">
+      <h2 id="t-apl" style="font-size:1.6rem">Peças prontas com a marca</h2>
+      <p style="color:var(--suave);margin:6px 0 22px;max-width:64ch">A marca só vira reconhecimento quando aparece igual em todo ponto de contato. Estas peças já saem com as cores e o selo atuais.</p>
+      <div class="dois" style="gap:34px">
+        <div>
+          <h3>Post para o Instagram</h3>
+          <label for="p-titulo">Chamada</label><input type="text" id="p-titulo" maxlength="60" value="Reserve direto e economize">
+          <label for="p-sub">Linha de apoio</label><input type="text" id="p-sub" maxlength="70" value="Fim de semana na serra, com o mar à frente">
+          <div style="margin-top:14px"><canvas class="post" id="post" width="1080" height="1080" role="img" aria-label="Prévia do post para o Instagram"></canvas></div>
+          <div class="acoes" style="margin-top:12px"><button class="btn btn-primario btn-pequeno" id="baixar-post" type="button">Baixar imagem (PNG)</button></div>
+        </div>
+        <div style="display:grid;gap:26px;align-content:start">
+          <div><h3>Perfil no WhatsApp e no Instagram</h3><div style="display:flex;gap:16px;align-items:center;margin-top:12px"><span id="avatar"></span><p style="font-size:.92rem"><b data-marca="nome"></b><br><span style="color:var(--suave)">Conta comercial · <span data-marca="slogan"></span></span></p></div></div>
+          <div><h3>Placa de QR para a recepção</h3><div class="placa" id="placa" style="margin-top:12px"></div><div class="acoes nao-imprimir" style="margin-top:10px"><button class="btn btn-contorno btn-pequeno" id="imprimir" type="button">Imprimir placa</button></div></div>
+          <div><h3>Assinatura de e-mail</h3><div id="assinatura" style="background:#fff;border:1px solid var(--linha);border-radius:12px;padding:16px;margin-top:12px"></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap" style="padding-block:44px" aria-labelledby="t-regras">
+    <h2 id="t-regras" style="font-size:1.6rem">Regras de uso</h2>
+    <div class="amostras" style="margin-top:16px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))">
+      <div class="cartao"><h3>Respiro</h3><p>Deixe ao redor do logotipo um espaço igual à altura do sol do selo.</p></div>
+      <div class="cartao"><h3>Tamanho mínimo</h3><p>Selo a partir de 24 px. Logotipo completo a partir de 120 px de largura.</p></div>
+      <div class="cartao"><h3>Fundos</h3><p>Versão colorida sobre fundo claro. Versão negativa sobre a cor Mar. Versão de uma cor só para carimbo e gravação.</p></div>
+      <div class="cartao"><h3>O que evitar</h3><p>Esticar o selo, trocar as cores por outras fora da paleta, ou colocar o logotipo sobre foto sem escurecer o fundo.</p></div>
+    </div>
+  </section>
+</main>
+<div id="rodape"></div>
+<script src="js/dados.js"></script>
+<script src="js/marca.js"></script>
+<script src="js/reservas.js"></script>
+<script src="js/layout.js"></script>
+<script src="vendor/qrcode.js"></script>
+<script>
+(function () {
+  "use strict";
+  var $ = function (s) { return document.querySelector(s); }, esc = Marca.esc;
+  var NOMES = { mar: ["Mar", "Texto e fundos escuros"], mata: ["Mata", "Botões e ação principal"], agua: ["Água", "Detalhes e ondas"], sol: ["Sol", "Destaque e chamada"], sal: ["Sal", "Fundo claro"] };
+  var ordem = ["mar", "mata", "agua", "sol", "sal"];
+
+  /* ---- editor ---- */
+  function montarEditor() {
+    var c = Marca.get();
+    $("#e-nome").value = c.nome; $("#e-curto").value = c.curto; $("#e-ini").value = c.inicial; $("#e-slogan").value = c.slogan;
+    $("#cores-edit").innerHTML = ordem.map(function (k) {
+      return '<div><label for="c-' + k + '">' + NOMES[k][0] + '</label><input type="color" id="c-' + k + '" value="' + c.cores[k] + '" data-k="' + k + '"></div>';
+    }).join("");
+  }
+  function presets() {
+    var c = Marca.get();
+    $("#presets").innerHTML = Marca.presets.map(function (p) {
+      var on = ordem.every(function (k) { return p.cores[k].toLowerCase() === c.cores[k].toLowerCase(); });
+      return '<button type="button" class="preset" data-p="' + p.id + '" aria-pressed="' + on + '"><span class="faixa-cores" aria-hidden="true">' + ordem.map(function (k) { return '<i style="background:' + p.cores[k] + '"></i>'; }).join("") + '</span><b>' + esc(p.nome) + '</b><small style="color:var(--suave)">' + esc(p.nota) + "</small></button>";
+    }).join("");
+  }
+  $("#presets").addEventListener("click", function (e) {
+    var b = e.target.closest("[data-p]"); if (!b) return;
+    var p = Marca.presets.filter(function (x) { return x.id === b.dataset.p; })[0]; Marca.salvar({ cores: p.cores }); montarEditor();
+  });
+  $("#cores-edit").addEventListener("input", function (e) {
+    var k = e.target.dataset.k; if (!k) return; var cs = Marca.get().cores; cs[k] = e.target.value; Marca.salvar({ cores: cs });
+  });
+  $("#e-nome").addEventListener("input", function () { Marca.salvar({ nome: this.value || window.MARCA.nome }); });
+  $("#e-curto").addEventListener("input", function () { Marca.salvar({ curto: this.value || window.MARCA.curto }); });
+  $("#e-ini").addEventListener("input", function () { Marca.salvar({ inicial: (this.value || window.MARCA.inicial).slice(0, 1).toUpperCase() }); });
+  $("#e-slogan").addEventListener("input", function () { Marca.salvar({ slogan: this.value || window.MARCA.slogan }); });
+  $("#restaurar").addEventListener("click", function () { Marca.restaurar(); montarEditor(); });
+
+  /* ---- seções que dependem da marca ---- */
+  function logos() {
+    var c = Marca.get();
+    var caixa = function (fundo, html, rot, desc) { return '<div class="amostra"><div class="amostra-topo" style="background:' + fundo + '">' + html + '</div><div class="amostra-info"><b>' + rot + "</b><span style=\"color:var(--suave)\">" + desc + "</span></div></div>"; };
+    $("#logos").innerHTML =
+      caixa("#fff", Marca.logo(c, { tamanho: 56 }), "Principal", "Sobre fundo claro") +
+      caixa(c.cores.mar, Marca.logo(c, { tamanho: 56, negativo: true, fundo: c.cores.sal, onda2: c.cores.mar }), "Negativa", "Sobre a cor Mar") +
+      caixa("#fff", Marca.logo(c, { tamanho: 56, so_selo: true }), "Selo", "Perfil, ícone e carimbo") +
+      caixa("#fff", Marca.avatar(c, 80), "Avatar", "WhatsApp e Instagram") +
+      caixa("#fff", '<span style="color:' + c.cores.mar + '">' + Marca.logo(c, { tamanho: 56, fundo: c.cores.mar, sol: "#fff", onda: "#fff", onda2: c.cores.mar }) + "</span>", "Uma cor", "Gravação e carimbo");
+  }
+  function cores() {
+    var c = Marca.get();
+    $("#cores").innerHTML = ordem.map(function (k) {
+      var h = c.cores[k], branco = Marca.razao(h, "#ffffff"), escuro = Marca.razao(h, c.cores.mar), melhor = branco >= escuro ? "#fff" : c.cores.mar, r = Math.max(branco, escuro);
+      return '<div class="amostra"><div class="cor" style="background:' + h + ";color:" + melhor + '"><span>' + NOMES[k][0] + "<br><small>" + h.toUpperCase() + '</small></span></div><div class="amostra-info"><b>' + NOMES[k][1] + "</b><span style=\"color:var(--suave)\">Melhor texto: " + (melhor === "#fff" ? "branco" : "Mar") + " · " + r.toFixed(1).replace(".", ",") + ":1 " + (r >= 4.5 ? "✓" : "abaixo de 4,5") + "</span></div></div>";
+    }).join("");
+  }
+  function avatar() { $("#avatar").innerHTML = Marca.avatar(Marca.get(), 72); }
+  function assinatura() {
+    var c = Marca.get();
+    $("#assinatura").innerHTML = '<div style="display:flex;gap:14px;align-items:center">' + Marca.selo(c, 56) +
+      '<div style="font-size:.9rem;line-height:1.4"><b style="font-family:var(--f-titulo);font-size:1.1rem;font-weight:400">' + esc(c.nome) + '</b><br><span style="color:' + c.cores.mata + ';font-weight:700">' + esc(c.slogan) + "</span><br>" + esc(window.MARCA.cidade) + "<br>" + esc(c.instagram) + "</div></div>";
+  }
+  function placa() {
+    var c = Marca.get(), url = location.href.replace(/marca\.html.*$/, "reservar.html"), q = qrcode(0, "M"); q.addData(url); q.make();
+    $("#placa").innerHTML = Marca.selo(c, 52) + "<b style=\"font-family:var(--f-titulo);font-weight:400;font-size:1.2rem\">" + esc(c.nome) + "</b><span>Reserve direto, sem comissão</span>" +
+      q.createSvgTag({ cellSize: 4, margin: 2, scalable: true }).replace("<svg", '<svg class="qr" role="img" aria-label="QR code da página de reserva"') + "<small>Aponte a câmera do celular</small>";
+  }
+
+  /* ---- post em canvas ---- */
+  function quebra(ctx, texto, x, y, larg, alt) {
+    var pal = texto.split(" "), linha = "", yy = y;
+    pal.forEach(function (p) { var t = linha ? linha + " " + p : p; if (ctx.measureText(t).width > larg && linha) { ctx.fillText(linha, x, yy); yy += alt; linha = p; } else linha = t; });
+    ctx.fillText(linha, x, yy); return yy;
+  }
+  function post() {
+    var c = Marca.get(), cv = $("#post"), g = cv.getContext("2d"), W = 1080;
+    var gr = g.createLinearGradient(0, 0, 0, W); gr.addColorStop(0, c.cores.mar); gr.addColorStop(1, c.cores.agua); g.fillStyle = gr; g.fillRect(0, 0, W, W);
+    g.fillStyle = c.cores.sol; g.beginPath(); g.arc(850, 770, 105, 0, 7); g.fill();
+    g.globalAlpha = .5; g.fillStyle = c.cores.mata; g.beginPath(); g.moveTo(0, 760); g.lineTo(200, 640); g.lineTo(380, 740); g.lineTo(600, 600); g.lineTo(800, 740); g.lineTo(1080, 650); g.lineTo(1080, 1080); g.lineTo(0, 1080); g.fill(); g.globalAlpha = 1;
+    g.fillStyle = c.cores.agua; g.beginPath(); g.moveTo(0, 840); for (var x = 0; x <= 1080; x += 90) g.quadraticCurveTo(x + 45, 810, x + 90, 840); g.lineTo(1080, 1080); g.lineTo(0, 1080); g.fill();
+    g.fillStyle = c.cores.sal; g.beginPath(); g.moveTo(0, 910); for (var x2 = 0; x2 <= 1080; x2 += 90) g.quadraticCurveTo(x2 + 45, 880, x2 + 90, 910); g.lineTo(1080, 1080); g.lineTo(0, 1080); g.fill();
+    // selo
+    g.fillStyle = c.cores.sal; g.beginPath(); g.arc(120, 120, 56, 0, 7); g.fill();
+    g.fillStyle = c.cores.sol; g.beginPath(); g.arc(120, 114, 20, 0, 7); g.fill();
+    g.fillStyle = c.cores.agua; g.beginPath(); g.moveTo(64, 134); g.quadraticCurveTo(92, 120, 120, 134); g.quadraticCurveTo(148, 148, 176, 134); g.lineTo(176, 160); g.arc(120, 120, 56, 0.55, 2.59); g.fill();
+    g.fillStyle = c.cores.sal; g.font = '400 44px "Young Serif", Georgia, serif'; g.textBaseline = "alphabetic"; g.fillText(c.curto, 196, 128);
+    g.font = '700 22px "Figtree", sans-serif'; g.fillStyle = c.cores.sol; g.fillText(window.MARCA.cidade.split(" · ")[0].toUpperCase(), 198, 160);
+    // texto
+    g.fillStyle = "#fff"; g.font = '400 92px "Young Serif", Georgia, serif'; var yy = quebra(g, $("#p-titulo").value || " ", 80, 360, 880, 104);
+    g.fillStyle = "#e6f1f4"; g.font = '500 38px "Figtree", sans-serif'; quebra(g, $("#p-sub").value || " ", 80, yy + 70, 640, 50);
+    // botão
+    g.fillStyle = c.cores.sol; var bx = 80, by = 940, bw = 420, bh = 76, r = 38; g.beginPath(); g.moveTo(bx + r, by); g.arcTo(bx + bw, by, bx + bw, by + bh, r); g.arcTo(bx + bw, by + bh, bx, by + bh, r); g.arcTo(bx, by + bh, bx, by, r); g.arcTo(bx, by, bx + bw, by, r); g.fill();
+    g.fillStyle = c.cores.mar; g.font = '800 32px "Figtree", sans-serif'; g.textAlign = "center"; g.fillText("Reserve pelo link da bio", bx + bw / 2, by + 49); g.textAlign = "left";
+  }
+  $("#p-titulo").addEventListener("input", post); $("#p-sub").addEventListener("input", post);
+  $("#baixar-post").addEventListener("click", function () {
+    post(); $("#post").toBlob(function (b) { var u = URL.createObjectURL(b), a = document.createElement("a"); a.href = u; a.download = "post-" + Marca.get().curto.toLowerCase().replace(/[^a-z0-9]+/g, "-") + ".png"; a.click(); setTimeout(function () { URL.revokeObjectURL(u); }, 1000); });
+  });
+  $("#imprimir").addEventListener("click", function () { window.print(); });
+
+  function tudo() { presets(); logos(); cores(); avatar(); assinatura(); placa(); post(); }
+  document.addEventListener("marca:aplicada", tudo);
+  montarEditor(); tudo();
+  if (document.fonts && document.fonts.load) Promise.all([document.fonts.load('400 40px "Young Serif"'), document.fonts.load('700 20px "Figtree"')]).then(post).catch(function () {});
+})();
+</script>
+</body>
+</html>

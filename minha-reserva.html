@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Consulte ou cancele sua reserva na Pousada Sal & Serra com o código.">
+<meta name="theme-color" content="#0b2b3c">
+<title>Minha reserva · Pousada Sal & Serra</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Young+Serif&display=swap">
+<link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+<a class="pular" href="#conteudo">Pular para o conteúdo</a>
+<div id="topo" data-atual="minha-reserva.html"></div>
+<main id="conteudo" class="wrap pagina" tabindex="-1" style="max-width:720px">
+  <h1 style="font-size:clamp(1.9rem,4.6vw,2.8rem)">Minha reserva</h1>
+  <form id="busca" novalidate style="margin-top:18px">
+    <label for="cod" style="margin-top:0">Código da reserva</label>
+    <div style="display:flex;gap:8px"><input type="text" id="cod" maxlength="8" autocapitalize="characters" autocomplete="off" placeholder="Ex.: K7M2P" style="text-transform:uppercase"><button class="btn btn-primario" type="submit" style="flex:none">Buscar</button></div>
+    <p class="aviso" style="margin-top:10px">Para testar, use o código <b>DEMO1</b>.</p>
+  </form>
+  <div id="res" style="margin-top:22px;display:grid;gap:14px" aria-live="polite"></div>
+</main>
+<div id="rodape"></div>
+<script src="js/dados.js"></script>
+<script src="js/marca.js"></script>
+<script src="js/reservas.js"></script>
+<script src="js/layout.js"></script>
+<script>
+(function () {
+  "use strict";
+  var R = window.Reservas, $ = function (s) { return document.querySelector(s); }, esc = Marca.esc;
+  var ROT = { reservada: "Reservada", hospedada: "Hospedada", cancelada: "Cancelada", concluida: "Concluída" };
+  function mostrar(cod) {
+    var r = R.porCodigo(cod), box = $("#res");
+    if (!cod) { box.innerHTML = ""; return; }
+    if (!r) { box.innerHTML = '<p class="erro">Não encontramos esse código neste aparelho. Confira as letras e tente de novo.</p>'; return; }
+    var pode = r.status === "reservada" && r.ci >= R.hoje();
+    box.innerHTML = '<div class="cartao"><div class="linha-r"><span>Código</span><b>' + esc(r.cod) + '</b></div><div class="linha-r"><span>Situação</span><span class="estado ' + r.status + '">' + ROT[r.status] + '</span></div>' +
+      '<div class="linha-r"><span>Quarto</span><b>' + esc(r.quartoNome) + '</b></div><div class="linha-r"><span>Entrada</span><b>' + R.dataLonga(r.ci) + '</b></div><div class="linha-r"><span>Saída</span><b>' + R.dataLonga(r.co) + '</b></div>' +
+      '<div class="linha-r"><span>Hóspede</span><b>' + esc(r.nome) + '</b></div><div class="linha-r total"><span>Total</span><span>' + R.brl(r.total) + '</span></div>' +
+      (pode ? '<div class="acoes" style="margin-top:8px"><button class="btn btn-contorno" id="cancelar" type="button">Cancelar reserva</button></div>' : "") + "</div>";
+    var b = $("#cancelar");
+    if (b) b.addEventListener("click", function () {
+      if (b.dataset.c !== "1") { b.dataset.c = "1"; b.textContent = "Confirmar cancelamento"; return; }
+      R.mudar(r.id, { status: "cancelada" }); mostrar(cod);
+    });
+  }
+  $("#busca").addEventListener("submit", function (e) { e.preventDefault(); mostrar($("#cod").value.trim().toUpperCase()); });
+  var c = new URLSearchParams(location.search).get("c"); if (c) { $("#cod").value = c; mostrar(c); }
+})();
+</script>
+</body>
+</html>

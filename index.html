@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Reserve direto com a Pousada Sal & Serra, em Juquehy: escolha as datas, veja o preço e confirme em minutos, sem comissão de plataforma.">
+<meta name="theme-color" content="#0b2b3c">
+<title>Pousada Sal & Serra · Reserve direto</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Young+Serif&display=swap">
+<link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+<a class="pular" href="#conteudo">Pular para o conteúdo</a>
+<div id="topo" data-atual="index.html"></div>
+<main id="conteudo" tabindex="-1">
+  <section class="hero" aria-labelledby="titulo-hero">
+    <div class="sol-hero" aria-hidden="true"></div>
+    <div class="wrap hero-int">
+      <p class="sobre"><span data-marca="cidade"></span></p>
+      <h1 id="titulo-hero">Dormir ouvindo o mar, <span style="color:var(--sol)">acordar na serra.</span></h1>
+      <p class="lead">Quatro tipos de quarto a poucos passos da praia. Reserve direto com a pousada, veja o valor na hora e fale com a gente pelo WhatsApp.</p>
+    </div>
+    <svg class="hero-arte" viewBox="0 0 1440 300" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false">
+      <path style="fill:var(--mata)" opacity=".55" d="M0 150 L120 90 L230 140 L360 60 L520 150 L660 80 L800 150 L960 70 L1100 140 L1260 85 L1440 150 V300 H0Z"/>
+      <path style="fill:var(--mata)" d="M0 190 L150 140 L290 185 L430 120 L600 190 L760 130 L920 190 L1080 125 L1240 185 L1440 140 V300 H0Z"/>
+      <path style="fill:var(--agua)" d="M0 232 Q90 214 180 232 T360 232 T540 232 T720 232 T900 232 T1080 232 T1260 232 T1440 232 V300 H0Z"/>
+      <path style="fill:var(--sal)" d="M0 258 Q90 240 180 258 T360 258 T540 258 T720 258 T900 258 T1080 258 T1260 258 T1440 258 V300 H0Z"/>
+    </svg>
+  </section>
+
+  <div class="wrap">
+    <form class="busca" action="reservar.html" method="get" aria-label="Buscar datas">
+      <div><label for="b-ci">Entrada</label><input type="date" id="b-ci" name="ci" required></div>
+      <div><label for="b-co">Saída</label><input type="date" id="b-co" name="co" required></div>
+      <div><label for="b-ad">Adultos</label><select id="b-ad" name="ad"><option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option></select></div>
+      <div><label for="b-cr">Crianças</label><select id="b-cr" name="cr"><option selected>0</option><option>1</option><option>2</option><option>3</option></select></div>
+      <button class="btn btn-primario" type="submit">Ver quartos e preços</button>
+    </form>
+  </div>
+
+  <section class="secao" id="quartos" aria-labelledby="t-quartos">
+    <div class="wrap">
+      <div class="secao-cab"><p class="sobre">Onde ficar</p><h2 id="t-quartos">Quatro jeitos de ficar</h2><p>Todas as diárias incluem café da manhã. Sexta e sábado e a alta temporada (dezembro, janeiro e julho) têm acréscimo, que aparece antes de você confirmar.</p></div>
+      <div class="quartos" id="lista-quartos"></div>
+    </div>
+  </section>
+
+  <section class="faixa" aria-label="Por que reservar direto">
+    <div class="wrap faixa-int">
+      <div><h3>Sem comissão</h3><p>Reservando direto, o valor vai para a pousada e não para uma plataforma. Por isso o preço do site é o menor.</p></div>
+      <div><h3>Resposta no WhatsApp</h3><p>Dúvida sobre pet, berço, chegada tarde ou transfer? Você fala com quem trabalha aqui.</p></div>
+      <div><h3>Cancelamento claro</h3><p>Você recebe um código e cancela ou consulta a reserva sozinho, a qualquer hora.</p></div>
+    </div>
+  </section>
+
+  <section class="secao" aria-labelledby="t-como">
+    <div class="wrap">
+      <div class="secao-cab"><p class="sobre">Como funciona</p><h2 id="t-como">Da escolha ao código em três passos</h2></div>
+      <div class="passos-resumo">
+        <div class="cartao"><h3>Escolha as datas</h3><p>Só aparecem os quartos livres no seu período, com o valor total das diárias.</p></div>
+        <div class="cartao"><h3>Informe seus dados</h3><p>Nome e WhatsApp. Sem cadastro, sem senha.</p></div>
+        <div class="cartao"><h3>Receba o código</h3><p>A reserva fica registrada e a confirmação vai pronta para o WhatsApp da pousada.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="secao" style="padding-top:0" aria-labelledby="t-faq">
+    <div class="wrap" style="max-width:760px">
+      <div class="secao-cab"><p class="sobre">Dúvidas</p><h2 id="t-faq">Antes de reservar</h2></div>
+      <details class="faq"><summary>Qual o horário de entrada e saída?</summary><p>Entrada a partir das <span id="f-ci"></span> e saída até as <span id="f-co"></span>.</p></details>
+      <details class="faq"><summary>Crianças pagam?</summary><p>Nesta amostra, crianças contam na capacidade do quarto, e a pousada define a política de cada faixa de idade.</p></details>
+      <details class="faq"><summary>Como garanto a reserva?</summary><p>Na versão final, a pousada envia o Pix do sinal pelo WhatsApp depois da reserva. Nesta amostra nada é cobrado.</p></details>
+      <details class="faq"><summary>Aceitam animais?</summary><p>Esse é um exemplo de texto que a pousada preenche com a própria regra.</p></details>
+    </div>
+  </section>
+</main>
+<div id="rodape"></div>
+<script src="js/dados.js"></script>
+<script src="js/marca.js"></script>
+<script src="js/reservas.js"></script>
+<script src="js/layout.js"></script>
+<script>
+(function () {
+  "use strict";
+  var R = window.Reservas, P = window.POUSADA;
+  function esc(t) { return Marca.esc(t); }
+  var inCi = document.getElementById("b-ci"), inCo = document.getElementById("b-co");
+  inCi.min = R.hoje(); inCo.min = R.soma(R.hoje(), 1);
+  inCi.value = R.soma(R.hoje(), 7); inCo.value = R.soma(R.hoje(), 9);
+  inCi.addEventListener("change", function () { if (inCi.value) { inCo.min = R.soma(inCi.value, 1); if (!inCo.value || inCo.value <= inCi.value) inCo.value = R.soma(inCi.value, 2); } });
+  document.getElementById("f-ci").textContent = P.checkin; document.getElementById("f-co").textContent = P.checkout;
+  function arte(i) {
+    var t = [10, 28, 18, 36][i % 4];
+    return '<svg viewBox="0 0 300 138" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">' +
+      '<circle cx="' + (60 + i * 55) + '" cy="' + (46 + (i % 2) * 8) + '" r="' + (20 + t / 3) + '" style="fill:var(--sol)"/>' +
+      '<path style="fill:var(--mar)" opacity=".5" d="M0 100 L60 62 L120 96 L190 54 L260 98 L300 80 V138 H0Z"/>' +
+      '<path style="fill:var(--sal)" opacity=".92" d="M0 118 Q38 106 75 118 T150 118 T225 118 T300 118 V138 H0Z"/></svg>';
+  }
+  document.getElementById("lista-quartos").innerHTML = P.quartos.map(function (q, i) {
+    return '<article class="quarto"><div class="quarto-arte">' + arte(i) + '</div><div class="quarto-corpo"><h3>' + esc(q.nome) + '</h3>' +
+      '<p class="meta">Até ' + q.cap + ' pessoas · ' + q.area + ' m² · ' + esc(q.cama) + '</p><p>' + esc(q.desc) + '</p>' +
+      '<div class="chips">' + q.itens.map(function (x) { return '<span class="chip">' + esc(x) + '</span>'; }).join("") + '</div>' +
+      '<p class="preco"><small>a partir de</small> ' + R.brl(q.diaria) + ' <small>/ noite</small></p></div></article>';
+  }).join("");
+})();
+</script>
+</body>
+</html>

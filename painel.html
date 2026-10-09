@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0b2b3c">
+<title>Painel · Pousada Sal & Serra</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Young+Serif&display=swap">
+<link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+<a class="pular" href="#conteudo">Pular para o conteúdo</a>
+<div id="topo" data-atual="painel.html"></div>
+<main id="conteudo" class="wrap pagina" tabindex="-1">
+  <h1 style="font-size:clamp(1.9rem,4.6vw,2.8rem)">Painel da pousada</h1>
+  <p style="color:var(--suave);margin-top:8px;max-width:64ch">Faça uma reserva na página do hóspede (em outra aba, neste navegador) e veja a ocupação mudar aqui. Na versão final este painel tem login e grava num banco de dados online.</p>
+
+  <h2 style="font-size:1.4rem;margin-top:30px">Ocupação dos próximos 14 dias</h2>
+  <p style="color:var(--suave);font-size:.9rem;margin:6px 0 12px">Cada célula mostra quartos ocupados / total. Escuro = lotado.</p>
+  <div class="tabela-rolar"><table id="mapa" aria-label="Mapa de ocupação"></table></div>
+
+  <h2 style="font-size:1.4rem;margin-top:34px">Reservas</h2>
+  <div class="tabela-rolar" style="margin-top:12px"><table id="lista" aria-label="Reservas"></table></div>
+
+  <h2 style="font-size:1.4rem;margin-top:34px">Bloquear datas</h2>
+  <form id="bloq" class="grade-campos" novalidate style="margin-top:8px;align-items:end">
+    <div><label for="b-q">Quarto</label><select id="b-q"></select></div>
+    <div><label for="b-ini">De</label><input type="date" id="b-ini"></div>
+    <div><label for="b-fim">Até (inclusive)</label><input type="date" id="b-fim"></div>
+    <div><label for="b-mot">Motivo</label><input type="text" id="b-mot" maxlength="40" placeholder="Manutenção, uso próprio..."></div>
+    <button class="btn btn-primario" type="submit">Bloquear</button>
+  </form>
+  <p class="erro" id="b-erro" role="alert" hidden></p>
+  <div id="bloqueios" style="margin-top:14px"></div>
+  <div class="acoes" style="margin-top:30px"><button class="btn btn-contorno btn-pequeno" id="zerar" type="button">Apagar e recriar reservas de exemplo</button></div>
+</main>
+<div id="rodape"></div>
+<script src="js/dados.js"></script>
+<script src="js/marca.js"></script>
+<script src="js/reservas.js"></script>
+<script src="js/layout.js"></script>
+<script>
+(function () {
+  "use strict";
+  var R = window.Reservas, $ = function (s) { return document.querySelector(s); }, esc = Marca.esc;
+  var ROT = { reservada: "Reservada", hospedada: "Hospedada", cancelada: "Cancelada", concluida: "Concluída" };
+
+  function mapa() {
+    var dias = []; for (var i = 0; i < 14; i++) dias.push(R.soma(R.hoje(), i));
+    var h = "<thead><tr><th scope='col'>Quarto</th>" + dias.map(function (d) { var x = R.parse(d); return "<th scope='col'>" + R.DIAS[x.getDay()].slice(0, 3) + " " + x.getDate() + "</th>"; }).join("") + "</tr></thead><tbody>";
+    R.quartos.forEach(function (q) {
+      h += "<tr><th scope='row'>" + esc(q.nome) + "</th>" + dias.map(function (d) {
+        var o = R.ocupacaoDia(q, d), cls = o >= q.qtd ? "lx" : o === 0 ? "l0" : o / q.qtd > .5 ? "l2" : "l1";
+        return "<td class='cel " + cls + "'>" + o + "/" + q.qtd + "</td>";
+      }).join("") + "</tr>";
+    });
+    $("#mapa").innerHTML = h + "</tbody>";
+  }
+  function lista() {
+    var l = R.reservas().filter(function (r) { return r.status !== "concluida" || r.co >= R.hoje(); }).sort(function (a, b) { return a.ci < b.ci ? -1 : 1; });
+    var h = "<thead><tr><th scope='col'>Código</th><th scope='col'>Hóspede</th><th scope='col'>Quarto</th><th scope='col'>Entrada</th><th scope='col'>Saída</th><th scope='col'>Total</th><th scope='col'>Origem</th><th scope='col'>Situação</th><th scope='col'>Ações</th></tr></thead><tbody>";
+    if (!l.length) h += "<tr><td colspan='9'>Nenhuma reserva.</td></tr>";
+    l.forEach(function (r) {
+      var a = "";
+      if (r.status === "reservada") a += "<button class='btn btn-contorno btn-pequeno' data-a='hospedada' data-id='" + r.id + "'>Check-in</button> <button class='btn btn-contorno btn-pequeno' data-a='cancelada' data-id='" + r.id + "'>Cancelar</button>";
+      else if (r.status === "hospedada") a += "<button class='btn btn-contorno btn-pequeno' data-a='concluida' data-id='" + r.id + "'>Check-out</button>";
+      h += "<tr><td><b>" + esc(r.cod) + "</b></td><td>" + esc(r.nome) + "</td><td>" + esc(r.quartoNome) + "</td><td>" + R.dataLonga(r.ci) + "</td><td>" + R.dataLonga(r.co) + "</td><td>" + R.brl(r.total) + "</td><td>" + esc(r.origem) + "</td><td><span class='estado " + r.status + "'>" + ROT[r.status] + "</span></td><td>" + a + "</td></tr>";
+    });
+    $("#lista").innerHTML = h + "</tbody>";
+  }
+  function bloqueios() {
+    var l = R.bloqueios();
+    $("#bloqueios").innerHTML = l.length ? l.map(function (b) {
+      return "<div class='linha-r' style='border-bottom:1px solid var(--linha);padding:8px 0'><span>" + esc(R.quarto(b.quartoId).nome) + " · " + R.dataLonga(b.ini) + " a " + R.dataLonga(b.fim) + (b.motivo ? " · " + esc(b.motivo) : "") + "</span><button class='btn btn-contorno btn-pequeno' data-del='" + b.id + "'>Liberar</button></div>";
+    }).join("") : "<p style='color:var(--suave)'>Nenhum bloqueio.</p>";
+  }
+  function tudo() { mapa(); lista(); bloqueios(); }
+
+  $("#b-q").innerHTML = R.quartos.map(function (q) { return "<option value='" + q.id + "'>" + esc(q.nome) + "</option>"; }).join("");
+  $("#b-ini").value = R.soma(R.hoje(), 10); $("#b-fim").value = R.soma(R.hoje(), 12);
+  $("#lista").addEventListener("click", function (e) { var b = e.target.closest("button[data-a]"); if (!b) return; R.mudar(b.dataset.id, { status: b.dataset.a }); tudo(); });
+  $("#bloqueios").addEventListener("click", function (e) { var b = e.target.closest("button[data-del]"); if (!b) return; R.delBloqueio(b.dataset.del); tudo(); });
+  $("#bloq").addEventListener("submit", function (e) {
+    e.preventDefault(); var er = $("#b-erro"), ini = $("#b-ini").value, fim = $("#b-fim").value;
+    if (!ini || !fim || fim < ini) { er.textContent = "Escolha um período válido."; er.hidden = false; return; }
+    er.hidden = true; R.addBloqueio({ quartoId: $("#b-q").value, ini: ini, fim: fim, motivo: $("#b-mot").value.trim() }); tudo();
+  });
+  $("#zerar").addEventListener("click", function () { var b = $("#zerar"); if (b.dataset.c !== "1") { b.dataset.c = "1"; b.textContent = "Confirmar: apagar tudo"; return; } b.dataset.c = ""; b.textContent = "Apagar e recriar reservas de exemplo"; R.limparTudo(); tudo(); });
+  tudo();
+})();
+</script>
+</body>
+</html>

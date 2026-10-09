@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Escolha as datas e reserve direto na Pousada Sal & Serra.">
+<meta name="theme-color" content="#0b2b3c">
+<title>Reservar · Pousada Sal & Serra</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Young+Serif&display=swap">
+<link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+<a class="pular" href="#conteudo">Pular para o conteúdo</a>
+<div id="topo" data-atual="reservar.html"></div>
+<main id="conteudo" class="wrap pagina" tabindex="-1">
+  <div id="fluxo">
+    <h1 style="font-size:clamp(1.9rem,4.6vw,2.8rem)">Reserve direto</h1>
+    <div class="dois" style="margin-top:22px">
+      <div>
+        <form id="busca" novalidate aria-label="Datas e hóspedes">
+          <div class="grade-campos">
+            <div><label for="ci" style="margin-top:0">Entrada</label><input type="date" id="ci" required></div>
+            <div><label for="co" style="margin-top:0">Saída</label><input type="date" id="co" required></div>
+            <div><label for="ad" style="margin-top:0">Adultos</label><select id="ad"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
+            <div><label for="cr" style="margin-top:0">Crianças</label><select id="cr"><option>0</option><option>1</option><option>2</option><option>3</option></select></div>
+          </div>
+          <p class="erro" id="erro-busca" role="alert" hidden></p>
+        </form>
+        <div id="opcoes" style="display:grid;gap:12px;margin-top:20px" aria-live="polite"></div>
+      </div>
+      <aside class="lateral" id="lateral" aria-label="Resumo da reserva"></aside>
+    </div>
+  </div>
+  <div id="ok" class="confirmado" hidden tabindex="-1" aria-live="polite"></div>
+</main>
+<div id="rodape"></div>
+<script src="js/dados.js"></script>
+<script src="js/marca.js"></script>
+<script src="js/reservas.js"></script>
+<script src="js/layout.js"></script>
+<script>
+(function () {
+  "use strict";
+  var R = window.Reservas, M = window.MARCA, $ = function (s) { return document.querySelector(s); }, esc = Marca.esc;
+  var q = new URLSearchParams(location.search);
+  var s = { ci: q.get("ci") || R.soma(R.hoje(), 7), co: q.get("co") || R.soma(R.hoje(), 9), ad: Number(q.get("ad")) || 2, cr: Number(q.get("cr")) || 0, quartoId: "" };
+  $("#ci").min = R.hoje(); $("#ci").value = s.ci; $("#co").value = s.co; $("#ad").value = String(s.ad); $("#cr").value = String(s.cr);
+
+  function ler() { s.ci = $("#ci").value; s.co = $("#co").value; s.ad = Number($("#ad").value); s.cr = Number($("#cr").value); }
+  function mascara(v) {
+    var d = R.soDigitos(v).slice(0, 11), k = d.length > 10 ? 7 : 6;
+    return d.length > 6 ? "(" + d.slice(0, 2) + ") " + d.slice(2, k) + "-" + d.slice(k) : d.length > 2 ? "(" + d.slice(0, 2) + ") " + d.slice(2) : d;
+  }
+
+  function opcoes() {
+    var err = R.validar(s.ci, s.co, s.ad, s.cr), e = $("#erro-busca"), box = $("#opcoes");
+    e.hidden = !err; e.textContent = err;
+    if (err) { box.innerHTML = ""; lateral(); return; }
+    $("#co").min = R.soma(s.ci, 1);
+    var n = R.noites(s.ci, s.co), hosp = s.ad + s.cr;
+    box.innerHTML = '<p class="aviso">' + n + (n > 1 ? " noites" : " noite") + ", de " + R.dataLonga(s.ci) + " a " + R.dataLonga(s.co) + " · " + hosp + (hosp > 1 ? " hóspedes" : " hóspede") + "</p>" +
+      R.quartos.map(function (qu) {
+        var p = R.preco(qu, s.ci, s.co), liv = R.livres(qu, s.ci, s.co), cabe = qu.cap >= hosp, ok = cabe && liv > 0;
+        var info = !cabe ? "Comporta até " + qu.cap + " pessoas" : liv < 1 ? "Esgotado nesse período" : (liv <= 1 ? "Última unidade" : "Restam " + liv) + " · " + qu.area + " m² · " + qu.cama;
+        return '<div class="opcao' + (s.quartoId === qu.id ? " ativa" : "") + '"' + (ok ? "" : ' aria-disabled="true"') + '><div><h3>' + esc(qu.nome) + '</h3><p style="color:var(--suave);font-size:.92rem">' + esc(info) + "</p>" +
+          (ok ? '<p style="margin-top:4px"><b>' + R.brl(p.total) + "</b> no total · média de " + R.brl(p.media) + " por noite</p>" : "") + "</div>" +
+          (ok ? '<button type="button" class="btn ' + (s.quartoId === qu.id ? "btn-primario" : "btn-contorno") + ' btn-pequeno" data-q="' + qu.id + '" aria-pressed="' + (s.quartoId === qu.id) + '">' + (s.quartoId === qu.id ? "Escolhido" : "Escolher") + "</button>" : "") + "</div>";
+      }).join("");
+    lateral();
+  }
+
+  function lateral() {
+    var box = $("#lateral"), qu = s.quartoId && R.quarto(s.quartoId);
+    if (!qu || R.validar(s.ci, s.co, s.ad, s.cr) || R.livres(qu, s.ci, s.co) < 1) {
+      s.quartoId = ""; box.innerHTML = '<h2 style="font-size:1.3rem">Sua reserva</h2><p style="color:var(--suave)">Escolha as datas e um quarto para ver o resumo e confirmar.</p>'; return;
+    }
+    var p = R.preco(qu, s.ci, s.co);
+    box.innerHTML = '<h2 style="font-size:1.3rem">Sua reserva</h2><p><b>' + esc(qu.nome) + "</b><br>" + R.dataLonga(s.ci) + " → " + R.dataLonga(s.co) + "</p>" +
+      '<div class="linha-r"><span>' + p.noites + (p.noites > 1 ? " diárias" : " diária") + " (média " + R.brl(p.media) + ")</span><span>" + R.brl(p.total) + "</span></div>" +
+      '<div class="linha-r"><span>Café da manhã</span><span>incluso</span></div><div class="linha-r total"><span>Total</span><span>' + R.brl(p.total) + "</span></div>" +
+      '<form id="dados" novalidate><label for="nome">Seu nome</label><input type="text" id="nome" autocomplete="name" maxlength="60" required>' +
+      '<label for="tel">WhatsApp</label><input type="tel" id="tel" inputmode="tel" autocomplete="tel" placeholder="(12) 99999-9999" maxlength="15" required>' +
+      '<label for="obs">Alguma observação? (opcional)</label><textarea id="obs" maxlength="240" placeholder="Horário de chegada, berço, pet..."></textarea>' +
+      '<p class="erro" id="erro" role="alert" hidden></p><button class="btn btn-primario" type="submit" style="width:100%;margin-top:14px">Confirmar reserva</button>' +
+      '<p style="font-size:.82rem;color:var(--suave);margin-top:10px">Nesta amostra nada é cobrado. Na versão final a pousada envia o Pix do sinal pelo WhatsApp.</p></form>';
+    $("#tel").addEventListener("input", function () { this.value = mascara(this.value); });
+    $("#dados").addEventListener("submit", enviar);
+  }
+
+  function ics(r) {
+    var d1 = r.ci.replace(/-/g, ""), d2 = r.co.replace(/-/g, "");
+    return ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//novapicks//pousada//PT-BR", "BEGIN:VEVENT", "UID:" + r.cod + "@pousada", "DTSTAMP:" + d1 + "T120000Z",
+      "DTSTART;VALUE=DATE:" + d1, "DTEND;VALUE=DATE:" + d2, "SUMMARY:" + r.quartoNome + " · " + Marca.get().nome, "LOCATION:" + M.endereco, "END:VEVENT", "END:VCALENDAR"].join("\r\n");
+  }
+  function enviar(ev) {
+    ev.preventDefault();
+    var nome = $("#nome").value.trim(), tel = R.soDigitos($("#tel").value), er = $("#erro");
+    if (nome.length < 2) { er.textContent = "Informe seu nome."; er.hidden = false; $("#nome").focus(); return; }
+    if (tel.length < 10) { er.textContent = "Informe um WhatsApp com DDD."; er.hidden = false; $("#tel").focus(); return; }
+    var r = R.criar({ quartoId: s.quartoId, ci: s.ci, co: s.co, adultos: s.ad, criancas: s.cr, nome: nome, tel: tel, obs: $("#obs").value.trim() });
+    if (!r) { s.quartoId = ""; opcoes(); $("#erro-busca").textContent = "Esse quarto acabou de ser reservado nesse período. Escolha outro."; $("#erro-busca").hidden = false; return; }
+    confirmado(r);
+  }
+  function confirmado(r) {
+    var msg = "Olá! Acabei de reservar pelo site: *" + r.quartoNome + "*, " + R.dataLonga(r.ci) + " a " + R.dataLonga(r.co) + " (" + r.noites + " noites), " + R.brl(r.total) + ". Nome: " + r.nome + ". Código " + r.cod + ".";
+    $("#fluxo").hidden = true; var ok = $("#ok"); ok.hidden = false;
+    ok.innerHTML = '<h1 style="font-size:clamp(1.9rem,4.6vw,2.8rem)">Reserva registrada</h1><p>Guarde o código para consultar ou cancelar. A pousada confirma o sinal pelo WhatsApp.</p>' +
+      '<p class="codigo" aria-label="Código ' + r.cod.split("").join(" ") + '">' + esc(r.cod) + "</p>" +
+      '<div class="cartao"><div class="linha-r"><span>Quarto</span><b>' + esc(r.quartoNome) + '</b></div><div class="linha-r"><span>Entrada</span><b>' + R.dataLonga(r.ci) + " · a partir das " + R.P.checkin + '</b></div>' +
+      '<div class="linha-r"><span>Saída</span><b>' + R.dataLonga(r.co) + " · até " + R.P.checkout + '</b></div><div class="linha-r"><span>Hóspedes</span><b>' + r.adultos + " adulto(s)" + (r.criancas ? ", " + r.criancas + " criança(s)" : "") + '</b></div>' +
+      '<div class="linha-r total"><span>Total</span><span>' + R.brl(r.total) + '</span></div></div>' +
+      '<div class="acoes"><a class="btn btn-primario" target="_blank" rel="noopener" href="https://wa.me/' + M.whatsapp + "?text=" + encodeURIComponent(msg) + '">Enviar confirmação pelo WhatsApp</a>' +
+      '<button class="btn btn-contorno" id="baixar" type="button">Adicionar à agenda</button><a class="btn btn-contorno" href="minha-reserva.html?c=' + r.cod + '">Ver minha reserva</a><a class="btn btn-contorno" href="reservar.html">Nova reserva</a></div>';
+    $("#baixar").addEventListener("click", function () {
+      var u = URL.createObjectURL(new Blob([ics(r)], { type: "text/calendar" })), l = document.createElement("a");
+      l.href = u; l.download = "reserva-" + r.cod + ".ics"; l.click(); setTimeout(function () { URL.revokeObjectURL(u); }, 1000);
+    });
+    window.scrollTo({ top: 0 }); ok.focus();
+  }
+
+  ["ci", "co", "ad", "cr"].forEach(function (id) { $("#" + id).addEventListener("change", function () {
+    ler(); if (id === "ci" && s.ci && (!s.co || s.co <= s.ci)) { s.co = R.soma(s.ci, 2); $("#co").value = s.co; } opcoes(); }); });
+  $("#opcoes").addEventListener("click", function (e) { var b = e.target.closest("button[data-q]"); if (!b) return; s.quartoId = b.dataset.q; opcoes(); var n = $("#nome"); if (n && window.matchMedia("(max-width:899px)").matches) $("#lateral").scrollIntoView({ block: "start" }); });
+  $("#busca").addEventListener("submit", function (e) { e.preventDefault(); });
+  opcoes();
+})();
+</script>
+</body>
+</html>
